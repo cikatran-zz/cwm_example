@@ -1,5 +1,5 @@
-name: cwm_app
-description: A new Flutter project.
+name: come_with_me
+description: Come With Me App
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,6 +19,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  come_with_me_data:
+    path: ../come_with_me_data    
   flutter_redux: ^0.6.0
   redux_epics: ^0.13.0
   rxdart: ^0.23.1
@@ -35,6 +39,7 @@ dev_dependencies:
   retrofit_generator: any
   build_runner: any
   json_serializable: any
+  redux_remote_devtools: ^1.0.2
   flutter_test:
     sdk: flutter
 

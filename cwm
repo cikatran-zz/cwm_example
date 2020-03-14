@@ -1,0 +1,122 @@
+#!/bin/bash
+#### ALL FUNCTIONS
+validatedModule = 0
+
+runScript(){
+  if [ "${cwmCommands[0]}" == "initRedux" ]; then
+    generateRedux
+  elif [ "${cwmCommands[0]}" == "startDevtools" ]; then
+    startDevtools 
+  else
+    cd $cwmDir"/come_with_me" && echoInfo  "Execute commands in Come With Me App" && executeCommands
+    cd $cwmDir"/come_with_me_data" && echoInfo "Execute commands in Come With Me Data" && executeCommands
+    cd $cwmDir     
+  fi 
+}
+
+executeCommands(){
+  for command in "${cwmCommands[@]}"; do
+    if [ $command == "gen" ]; then
+      executeGenerate
+    fi
+    if [ $command == "get" ]; then
+      executeGetPackages
+    fi
+    if [ $command == "clean" ]; then
+      executeClean
+    fi
+    if [ $command == "analyze" ]; then
+      executeAnalyze
+    fi
+    if [ $command == "commit" ]; then
+      executeCommit
+    fi
+  done
+}
+
+
+executeClean(){
+  echoCommandInfo "CLEAN BUILD"
+  flutter clean
+}
+
+## DEVTOOLS
+startDevtools() {
+  echoCommandInfo "Start Devtools Server"
+  remoteServerPackage=$(npm -g ls remotedev-server --depth=0 --json)
+  if [[ -z "$remoteServerPackage" ]]; then
+    sudo npm install -g remotedev-server --unsafe-perm=true --allow-root
+  fi
+  remotedev --port 9001
+}
+
+##FLUTTER GENERATE
+flutterGenerate() {
+    cd $cwmDir"/come_with_me" && echoInfo  "Execute commands in come_with_me" && executeGetPackages && executeGenerate
+    cd $cwmDir"/come_with_me_data" && echoInfo  "Execute commands in come_with_me_data" && executeGetPackages && executeGenerate
+}
+
+
+getAnalyzeResult(){
+  echoCommandInfo "ANALYZE CODE"
+  cd lib
+  result=$(flutter analyze)
+  return "${result}"
+}
+
+## COMMIT
+
+
+executeAnalyze(){
+  echoCommandInfo "ANALYZE CODE"
+  cd lib
+  flutter analyze
+}
+
+executeGenerate(){
+  echoCommandInfo "AUTO GENERATED CLASS"
+  flutter packages pub run build_runner build --delete-conflicting-outputs
+}
+
+executeGetPackages(){
+  echoCommandInfo "AUTO GET PACKAGES"
+  flutter packages get
+}
+
+echoInfo(){
+  c_echo "GREEN"  "=====>  $1"
+}
+
+echoCommandInfo(){
+  c_echo "YELLOW"  "==========>  $1"
+}
+
+echoError(){
+  c_echo "RED"  "=====> ERROR:  $1  <====="
+}
+
+c_echo(){
+    bold=$(tput bold)
+    RED="\033[0;31m"
+    GREEN='\033[0;32m'
+    YELLOW='\033[1;33m'
+    NC='\033[0m' # No Color
+    printf "${!1}${bold}${2} ${NC}\n"
+}
+
+clear
+cwmDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+cwmCommands=( "$@" )
+cwmCommandsLength=${#cwmCommands[@]}
+if [ $cwmCommandsLength -eq 0 ]; then
+  echoError "You need to enter one or more command names, name should be: format/generate"
+  exit 1
+elif [ "${cwmCommands[0]}" == "initRedux" ]; then
+  if [ "${cwmCommands[1]}" == "" ]; then
+  echoError "Please input the name of Feature/Redux Eg: 'cwm initRedux [Redux name here]'"
+  exit 1
+  fi
+fi
+
+runScript
