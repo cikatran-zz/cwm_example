@@ -1,16 +1,13 @@
 # cwm_app
 
-A new Flutter project.
+Come with me Client Application
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Please follow this link to install Flutter (if not installed yet): https://flutter.dev/docs/get-started/install/macos
 
-A few resources to get you started if this is your first Flutter project:
+- Set `cwm-app` dir to bash/zsh PATH
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Run `cwm get` and `cwm gen`
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Enjoy!
