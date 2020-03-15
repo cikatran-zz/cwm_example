@@ -10,4 +10,6 @@ Please follow this link to install Flutter (if not installed yet): https://flutt
 
 - Run `cwm get` and `cwm gen`
 
+- Run `cwm startDevtools` to start Dev Tools for debugging redux (Note: Change `REMOTE_HOST` to current development machine ip)
+
 Enjoy!
