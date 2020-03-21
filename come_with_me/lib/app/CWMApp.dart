@@ -9,7 +9,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'CWMLifCycleManager.dart';
-import 'package:come_with_me_data/languages/LanguagesManager.dart';
 
 class CWMApp extends StatefulWidget {
   CWMApp({
